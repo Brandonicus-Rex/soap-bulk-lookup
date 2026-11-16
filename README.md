@@ -67,9 +67,12 @@ python -m soap_lookup.cli --input sample_data/ids.csv \
 Example output:
 
 ```
-Looked up 4 IDs in 0.0s -> results.csv
+Looked up 4 IDs in 0.02s -> results.csv
   found: 2  not found: 2  errors: 0
+Result: PASS - all 4 lookups completed with 0 errors
 ```
+
+The last line is the verdict. "Not found" is a valid answer, so a run passes when every lookup completed. If any lookup errors, the line reads `Result: FAIL - 1 of 4 lookups errored (see the error column)` and the command exits with code `1`.
 
 ```csv
 lookup_id,outcome,status,plan,device_id,error
