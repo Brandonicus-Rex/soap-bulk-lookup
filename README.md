@@ -8,6 +8,10 @@ It includes a mock SOAP service with fictional data, so you can run it locally w
 
 **Requires Python 3.10–3.13.** Some dependencies don't yet publish prebuilt packages for newer versions.
 
+## Demo
+
+![Terminal demo: bulk lookups from a CSV and an ID range, ending in Result: PASS](demo.gif)
+
 ## Why this exists
 
 Many back-office and telecom systems still expose SOAP APIs. Checking hundreds of test records one by one, for example to confirm which test accounts exist before a regression run, is slow and error-prone. This tool turns that into a single command with a clean, auditable CSV output.
