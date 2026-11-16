@@ -1,0 +1,17 @@
+<!--
+  Example SOAP request template.
+
+  {lookup_id} is replaced with each ID before sending (the value is
+  XML-escaped automatically). To use this tool with a different service,
+  copy this file, change the body to match that service's WSDL, keep the
+  {lookup_id} placeholder, and point the template option at it.
+-->
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:sub="urn:example:subscriber:v1">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sub:SearchRequest>
+         <sub:LookupId>{lookup_id}</sub:LookupId>
+      </sub:SearchRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
