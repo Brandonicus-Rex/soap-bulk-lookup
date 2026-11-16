@@ -99,11 +99,17 @@ def main(argv: list[str] | None = None) -> int:
     counts = write_results(lookup_many(config, ids, workers=args.workers), args.output, fields)
     elapsed = time.perf_counter() - started
 
-    print(f"Looked up {len(ids)} IDs in {elapsed:.1f}s -> {args.output}")
+    print(f"Looked up {len(ids)} IDs in {elapsed:.2f}s -> {args.output}")
     print(f"  found: {counts['found']}  not found: {counts['not_found']}  errors: {counts['error']}")
 
     # "Not found" is a valid answer, not a failure; only errors fail the run.
-    return 1 if counts["error"] else 0
+    # The last line states the verdict outright, so nobody has to infer it
+    # from the counts or the exit code.
+    if counts["error"]:
+        print(f"Result: FAIL - {counts['error']} of {len(ids)} lookups errored (see the error column)")
+        return 1
+    print(f"Result: PASS - all {len(ids)} lookups completed with 0 errors")
+    return 0
 
 
 if __name__ == "__main__":
