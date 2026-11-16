@@ -110,4 +110,16 @@ def test_cli_end_to_end(endpoint, tmp_path, capsys):
     assert code == 0
     rows = list(csv.DictReader(out.open()))
     assert [r["outcome"] for r in rows] == ["found", "found", "not_found", "found"]
-    assert "found: 3" in capsys.readouterr().out
+    printed = capsys.readouterr().out
+    assert "found: 3" in printed
+    # "Not found" is a valid answer, so the run still passes.
+    assert printed.rstrip().endswith("Result: PASS - all 4 lookups completed with 0 errors")
+
+
+def test_cli_reports_fail_when_a_lookup_errors(tmp_path, capsys):
+    # Nothing listens on port 9, so the lookup errors and the run must fail.
+    out = tmp_path / "results.csv"
+    code = cli.main(["--start", "5550100001", "--endpoint", "http://127.0.0.1:9/soap",
+                     "--timeout", "1", "--output", str(out)])
+    assert code == 1
+    assert "Result: FAIL - 1 of 1 lookups errored" in capsys.readouterr().out
